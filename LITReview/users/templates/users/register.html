@@ -1,0 +1,24 @@
+{% extends "index.html" %}
+{% block content %}
+    <h2 style="text-align: center;">Inscrivez-vous</h2>
+    <form method="post">
+        {% csrf_token %}        
+        {% comment %} 
+        <p>
+            <label>Titre</label><name="title" size="128" cols="128"/></br></br>
+            <textarea name="title" rows="1" cols="128">
+            </textarea>
+        </p>    
+        <p>
+            <label>Description</label name="description" size="2048"/></br></br>
+            <textarea name="description" rows="10" cols="128">
+            </textarea>  
+        </p> 
+        {% endcomment %}
+
+        {{ form.as_p }}
+
+        <button type="submit" id="btn__validateRegistration">S'inscrire</button>
+        <button href="#" id="btn__backToLogin" >Retourner</button>
+    </form>
+{% endblock content%}

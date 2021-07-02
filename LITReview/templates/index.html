@@ -1,0 +1,36 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" type="text/css" href="{% static 'review/style.css' %}" />
+    {% if title%}
+        <title>LITReview - {{ title }}</title>
+    {% else %}
+        <title>LITReview</title>
+    {% endif %} 
+</head>
+<body>
+    <header>
+        <h1 id="mainTitle">LITReview</h1>
+        <nav>
+            <ul id="header_menu">
+                <li>Flux</li>
+                <li>Abonnements</li>
+                <li>Se déconnecter</li>
+            </ul>
+        </nav>
+    </header>
+    
+    <section id="mainSection">
+    {% if messages %}
+       {% for message in messages %}
+        {{message}}
+       {% endfor %} 
+    {% endif %}
+
+    {% block content %}
+    {% endblock %}
+    </section> 
+</body>
+</html>

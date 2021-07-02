@@ -1,0 +1,35 @@
+header 
+{
+    border-bottom: 1px solid black;
+}
+
+body
+{
+    border: 1px solid black;
+    padding-bottom: 50px;
+}
+
+#mainTitle
+{
+    text-align: center;
+}
+
+#header_menu
+{
+    display: flex;
+    list-style-type: none;
+    justify-content: space-evenly;
+}
+
+#mainSection
+{
+    width: 75%;
+    min-width: 400px;
+    margin: auto;
+
+}
+
+h1
+{
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
