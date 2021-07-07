@@ -3,7 +3,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <link rel="stylesheet" type="text/css" href="{% static 'review/style.css' %}" />
+    <link rel="stylesheet" type="text/css" href="{% static 'review/style.css' %}">
     {% if title%}
         <title>LITReview - {{ title }}</title>
     {% else %}
@@ -14,11 +14,13 @@
     <header>
         <h1 id="mainTitle">LITReview</h1>
         <nav>
-            <ul id="header_menu">
-                <li>Flux</li>
-                <li>Abonnements</li>
-                <li>Se déconnecter</li>
-            </ul>
+            <div id="header_menu">
+                {% if user.is_authenticated %}
+                <a href=#>Flux</a>
+                <a href=#>Abonnements</a>
+                <a href="{% url 'logout' %}">Se déconnecter</a>
+                {% endif %}
+            </div>
         </nav>
     </header>
     

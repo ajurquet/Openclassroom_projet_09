@@ -2,6 +2,8 @@ from django.shortcuts import render, redirect
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib import messages
 
+
+
 def register(request):
     title = "S'enregistrer"
     if request.method == 'POST':
@@ -9,7 +11,7 @@ def register(request):
         if form.is_valid():
             form.save()
             messages.success(request, f'Compte créé avec succès !')
-            return redirect('create_ticket')
+            return redirect('login')
 
     else:
         form = UserCreationForm()

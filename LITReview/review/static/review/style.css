@@ -17,8 +17,7 @@ body
 #header_menu
 {
     display: flex;
-    list-style-type: none;
-    justify-content: space-evenly;
+    align-content: space-around;
 }
 
 #mainSection
@@ -26,10 +25,36 @@ body
     width: 75%;
     min-width: 400px;
     margin: auto;
-
 }
 
 h1
 {
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+#block__connection
+{
+    display: flex;
+    justify-content: space-between;
+}
+
+#block__registration
+{
+    width: 50%;
+}
+
+#block__login
+{
+    width: 50%;
+}
+
+#ticket_description
+{
+    width: 400px;
+}
+
+#ticket_title
+{
+    width: 400px;
+    height: 400px;
 }
