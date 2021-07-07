@@ -14,10 +14,16 @@ body
     text-align: center;
 }
 
+#nav__flux, #nav__abo, #nav__logout
+{
+    margin-right: 15px;
+} 
+
 #header_menu
 {
     display: flex;
-    align-content: space-around;
+    justify-content: flex-end;
+    margin-right: 10px;
 }
 
 #mainSection
