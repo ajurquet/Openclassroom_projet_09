@@ -1,0 +1,12 @@
+{% extends "index.html" %}
+{% block content %}
+    <h2 style="text-align: center;">Flux utilisateur</h2>
+    
+    {% for ticket in context.user_tickets %}
+
+        <p class="ticket__title">{{ticket.title}}</p>
+        <p class="ticket__description">{{ticket.description}}</p>
+    
+    {% endfor %}
+    
+{% endblock content%}

@@ -2,6 +2,8 @@ from django.urls import path
 
 from. import views
 
+
 urlpatterns = [
-    path('', views.createticket, name='create_ticket'),
+    path('/review', views.createticket, name='create_ticket'),
+    path('', views.flux, name='flux'),
 ]

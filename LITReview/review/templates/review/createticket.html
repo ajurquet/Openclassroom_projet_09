@@ -1,12 +1,16 @@
 {% extends "index.html" %}
 {% block content %}
+
     <h2 style="text-align: center;">Créer un ticket</h2>
 
     <form method="POST">
         {% csrf_token %}
-        {{ form.as_p }}
-        <input type="submit" value="Envoyer">
+        <div class="form">
+            {{ form.as_p }}
+            <input type="submit" value="Envoyer">
+        </div>
     </form>
+    
 {% endblock content%}
 
  
