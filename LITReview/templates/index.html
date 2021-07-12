@@ -16,7 +16,7 @@
         <nav>
             <div id="header_menu">
                 {% if user.is_authenticated %}
-                <a id="nav__flux" href=#>Flux</a>
+                <a id="nav__flux" href="{% url 'flux'%}">Flux</a>
                 <a id="nav__abo" href=#>Abonnements</a>
                 <a id="nav__logout" href="{% url 'logout' %}">Se déconnecter</a>
                 {% endif %}

@@ -4,6 +4,8 @@ from. import views
 
 
 urlpatterns = [
-    path('/review', views.createticket, name='create_ticket'),
     path('', views.flux, name='flux'),
+    path('createticket', views.create_ticket, name='create_ticket'),
+    path('createreview', views.create_review, name='create_review')
 ]
+

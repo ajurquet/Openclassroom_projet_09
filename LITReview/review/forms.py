@@ -1,7 +1,9 @@
 from django import forms
+from django.db.models import fields
 from django.forms import widgets
 from django.forms.models import ModelChoiceField
-from .models import Ticket
+from .models import Ticket, Review
+# from PIL import Image
 
 # class TicketForm(forms.Form):
 #     title = forms.CharField(max_length=128, required=True)
@@ -10,10 +12,29 @@ from .models import Ticket
 class TicketForm(forms.ModelForm):
     class Meta:
         model = Ticket
-        fields = ['title', 'description']
+        fields = ['title', 'description', "image"]
 
         labels = {"title": "Titre",
                   "description": "Description"
                   }
-        # widgets = {"description": forms.Textarea()}
+
+
+class ReviewForm(forms.ModelForm):
+    class Meta:
+        model = Review
+        fields = ['headline', 'rating', 'body']
+        labels = { "headline": "Titre de la critique", 
+                   "rating": "Note",
+                   "body": "Commentaire"
+                   }
+        CHOICES=[('0', 0),
+                 ('1', 1),
+                 ('2', 2),
+                 ('3', 3),
+                 ('4', 4),
+                 ('5', 5)
+                 ]
+        widgets = {"rating": forms.RadioSelect(choices=CHOICES),
+                   "body": forms.Textarea()
+                   }
 
