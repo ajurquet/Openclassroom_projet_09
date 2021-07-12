@@ -1,11 +1,18 @@
 {% extends "index.html" %}
 {% block content %}
     <h2 style="text-align: center;">Flux utilisateur</h2>
+
+    <div class="flux__nav">
+        <a href=#>Demander une critique</a>
+        <a href="{% url 'create_review'%}">Créer une critique</a>
+        <a href="{% url 'create_ticket'%}">Créer un ticket</a>
+    </div>
     
     {% for ticket in context.user_tickets %}
 
         <p class="ticket__title">{{ticket.title}}</p>
         <p class="ticket__description">{{ticket.description}}</p>
+        <img class="ticket__image" src="{{ ticket.image.url }}">
     
     {% endfor %}
     

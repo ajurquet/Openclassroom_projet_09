@@ -121,11 +121,17 @@ USE_TZ = True
 
 STATIC_URL = '/review/static/'
 
+
+MEDIA_ROOT = Path(BASE_DIR, 'medias')
+MEDIA_URL = '/medias/'
+
 # Default primary key field type
 # https://docs.djangoproject.com/en/3.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
-LOGIN_REDIRECT_URL = 'create_ticket'
+LOGIN_REDIRECT_URL = 'flux'
 LOGIN_URL = 'login'
 # AUTH_USER_MODEL = 'users.CustomUser'
+
+

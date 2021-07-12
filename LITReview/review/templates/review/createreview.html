@@ -1,18 +1,15 @@
 {% extends "index.html" %}
 {% block content %}
 
-    <h2 style="text-align: center;">Créer un ticket</h2>
+    <h2 style="text-align: center;">Créer une review</h2>
 
     <form method="POST" enctype="multipart/form-data">
         {% csrf_token %}
         <div class="form">
             {{ form_ticket.as_p }}
+            {{ form_review.as_p }}
             <input type="submit" value="Envoyer">
         </div>
     </form>
     
-{% endblock content %}
-
- 
- 
- 
+{% endblock content%}

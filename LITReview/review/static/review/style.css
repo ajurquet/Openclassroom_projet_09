@@ -64,3 +64,10 @@ h1
     width: 400px;
     height: 400px;
 }
+
+.flux__nav
+{
+    display: flex;
+    justify-content: space-around;
+    border : 1px solid black
+}
