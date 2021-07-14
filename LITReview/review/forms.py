@@ -27,12 +27,12 @@ class ReviewForm(forms.ModelForm):
                    "rating": "Note",
                    "body": "Commentaire"
                    }
-        CHOICES=[('0', 0),
-                 ('1', 1),
-                 ('2', 2),
-                 ('3', 3),
-                 ('4', 4),
-                 ('5', 5)
+        CHOICES=[(0, '0'),
+                 (1, '1'),
+                 (2, '2'),
+                 (4, '3'),
+                 (4, '4'),
+                 (5, '5')
                  ]
         widgets = {"rating": forms.RadioSelect(choices=CHOICES),
                    "body": forms.Textarea()

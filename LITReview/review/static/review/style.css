@@ -71,3 +71,35 @@ h1
     justify-content: space-around;
     border : 1px solid black
 }
+
+form
+{
+    border: 1px, solid, black;
+    text-align: justify;
+}
+
+a:visited
+{
+    color: black;
+}
+
+.ticket
+{
+    border: 1px solid black;
+    margin: 15px;
+    padding: 15px;
+}
+
+.ticket__usernameAndDate
+{
+    display: flex;
+    justify-content: space-between
+    
+}
+
+.review
+{
+    border: 1px solid black;
+    margin: 15px;
+    padding: 15px;
+}

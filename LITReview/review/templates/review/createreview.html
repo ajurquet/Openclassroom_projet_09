@@ -5,7 +5,7 @@
 
     <form method="POST" enctype="multipart/form-data">
         {% csrf_token %}
-        <div class="form">
+        <div class="forms">
             {{ form_ticket.as_p }}
             {{ form_review.as_p }}
             <input type="submit" value="Envoyer">

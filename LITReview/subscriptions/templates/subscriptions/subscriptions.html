@@ -1,0 +1,37 @@
+{% extends "index.html" %}
+{% block content %}
+    <h2 style="text-align: center;">Suivre d'autres utilisateurs</h2>
+
+    <form method="POST" enctype="multipart/form-data">
+        {% csrf_token %}
+        <div class="forms">
+            {{ form.followed_user }}
+            
+            <input type="submit" value="Envoyer">
+        </div>
+    </form>
+
+    <h2 style="text-align: center;">Abonnements</h2>
+    <ul>
+
+    {% if users_user_follow %}
+        {% for user in users_user_follow %}
+        <li>{{ users_user_follow.username}}</li><a href=#>Se désabonner</a> 
+        {% endfor %}  
+    
+    {% else %}
+        <p>Vous ne suivez aucun utilisateurs</p>
+    
+
+    <h2 style="text-align: center;">Abonnés</h2>
+
+    {% if users_subscribes_user %}
+        {% for user in users_subscribes_user %}
+        <li>{{ users_subscribes_user.username}}</li><a href=#>Se désabonner</a> 
+        {% endfor %}  
+    
+    {% else %}
+        <p>Vous ne suivez aucun utilisateurs</p>
+
+    
+{% endblock content%}

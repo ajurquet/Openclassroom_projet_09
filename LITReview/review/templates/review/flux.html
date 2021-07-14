@@ -3,17 +3,63 @@
     <h2 style="text-align: center;">Flux utilisateur</h2>
 
     <div class="flux__nav">
-        <a href=#>Demander une critique</a>
+        <a href="{% url 'create_ticket'%}">Demander une critique</a>
         <a href="{% url 'create_review'%}">Créer une critique</a>
-        <a href="{% url 'create_ticket'%}">Créer un ticket</a>
     </div>
     
-    {% for ticket in context.user_tickets %}
+    {% comment %} Bloc ticket {% endcomment %}
+    {% for ticket in tickets %}
+        <section class="ticket">
+            {% if  ticket.user.id == current_user.id%}
+                <div class="ticket__usernameAndDate"></div>
+                <div>Vous avez demandé une critique</div>
+                <div>{{ ticket.time_created }}</div>
+            {% else %}
+                <div class="ticket__usernameAndDate"></div>
+                <div>{{ ticket.user.username }} a demandé une critique</div>
+                <div>{{ ticket.time_created }}</div>
+            {% endif %}
 
-        <p class="ticket__title">{{ticket.title}}</p>
-        <p class="ticket__description">{{ticket.description}}</p>
-        <img class="ticket__image" src="{{ ticket.image.url }}">
-    
+                <h3 class="ticket__title">{{ ticket.title }}</h3>
+                <p class="ticket__description">{{ ticket.description }}</p>
+                <img class="ticket__image" src="{{ ticket.image.url }}">
+        </section>
     {% endfor %}
-    
+
+        {% comment %} Bloc review {% endcomment %}
+        {% for review in reviews %}
+            {% comment %} {% if review.ticket == ticket %} {% endcomment %}
+            <section class="review">
+                {% if  review.user.id == current_user.id%}
+                    <div class="review__usernameAndDate"></div>
+                    <div>Vous avez publié une critique</div>
+                    <div>{{ review.time_created }}</div>
+
+                {% else %}
+                    <div class="review__usernameAndDate"></div>
+                    <div>{{ review.user.username }} a publié une critique</div>
+                    <div>{{ review.time_created }}</div>
+                {% endif %}
+                    <h3>{{ review.headline }}</h3>
+                    <div>Note: {{ review.rating }}</div>
+                    <div>{{ review.body }}
+            
+                <section class="ticket">
+                {% if  review.ticket.user.id == current_user.id%}
+                    <div class="ticket__usernameAndDate"></div>
+                    <div>Vous avez demandé une critique</div>
+                    <div>{{review.ticket.time_created}}</div>
+                {% else %}
+                    <div class="ticket__usernameAndDate"></div>
+                    <div>{{review.ticket.user.username}} a demandé une critique</div>
+                    <div>{{review.ticket.time_created}}</div>
+                {% endif %}
+
+                    <h3 class="ticket__title">{{ review.ticket.title }}</h3>
+                    <p class="ticket__description">{{ review.ticket.description }}</p>
+                    <img class="ticket__image" src="{{ review.ticket.image.url }}">
+                </section>
+            </section>
+        {% endfor %}
+     
 {% endblock content%}

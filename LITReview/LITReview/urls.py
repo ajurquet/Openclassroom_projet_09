@@ -24,7 +24,8 @@ from django.conf.urls.static import static
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', include('review.urls')),
-    path('users/', include('users.urls'))
+    path('users/', include('users.urls')),
+    path('subscriptions/', include('subscriptions.urls'))
 ]
 
 if settings.DEBUG:

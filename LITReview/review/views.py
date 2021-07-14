@@ -35,24 +35,23 @@ def create_review(request):
     title = "Créer une review"
 
     if request.method == "POST":
-        # try:
-        ticket_instance = Ticket.objects.create(title=request.POST['title'],
-                            description=request.POST['description'],
-                            image = request.FILES['image'],
+        try:
+            ticket_instance = Ticket.objects.create(title=request.POST['title'],
+                                description=request.POST['description'],
+                                image = request.FILES['image'],
+                                user=request.user
+                                )
+
+            Review.objects.create(ticket=ticket_instance,
+                            headline=request.POST['headline'],
+                            rating=request.POST['rating'],
+                            body=request.POST['body'],
                             user=request.user
                             )
-
-        Review.objects.create(ticket=ticket_instance,
-                        headline=request.POST['headline'],
-                        rating=request.POST['rating'],
-                        body=request.POST['body'],
-                        user=request.user
-                        )
-        # except:
-        #     form = ReviewForm(request.POST)
-        # else:
-            # return render(request,'review/flux.html')
-        return redirect("flux")
+        except:
+            form = ReviewForm(request.POST)
+        else:
+            return redirect("flux")
 
     else:
         form_review = ReviewForm()
@@ -81,13 +80,14 @@ def create_review(request):
 def flux(request):
     title = "Flux"
     current_user = request.user
-    user_tickets = Ticket.objects.all()
-    context = {
-        "user_tickets" : user_tickets
-    }
-    return render(request, "review/flux.html", {"title" : title,
-                                                "context": context}
-                                                )
+    tickets = Ticket.objects.all()
+    reviews = Review.objects.all()
+    context = {"tickets" : tickets,
+               "title" : title,
+               "current_user": current_user,
+               "reviews": reviews
+                }
+    return render(request, "review/flux.html", context)
 
     
 
