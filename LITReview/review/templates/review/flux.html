@@ -3,10 +3,10 @@
     <h2 style="text-align: center;">Flux utilisateur</h2>
 
     <div class="flux__nav">
-        <a href="{% url 'create_ticket'%}">Demander une critique</a>
-        <a href="{% url 'create_review'%}">Créer une critique</a>
+        <a class="flux__nav__link" href="{% url 'create_ticket'%}">Demander une critique</a>
+        <a class="flux__nav__link" href="{% url 'create_review'%}">Créer une critique</a>
     </div>
-    
+
     {% comment %} Bloc ticket {% endcomment %}
     {% for ticket in tickets %}
         <section class="ticket">
@@ -41,8 +41,10 @@
                     <div>{{ review.time_created }}</div>
                 {% endif %}
                     <h3>{{ review.headline }}</h3>
-                    <div>Note: {{ review.rating }}</div>
-                    <div>{{ review.body }}
+                    
+                    <div>Note: {{review.rating}}<span> ☆</span>
+                    </div>
+                    <div>{{ review.body }}</div>
             
                 <section class="ticket">
                 {% if  review.ticket.user.id == current_user.id%}

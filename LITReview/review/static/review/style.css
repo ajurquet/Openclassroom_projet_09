@@ -14,9 +14,10 @@ body
     text-align: center;
 }
 
-#nav__flux, #nav__abo, #nav__logout
+#nav__flux, #nav__abo, #nav__logout, #nav__post
 {
     margin-right: 15px;
+    margin-bottom: 15px;
 } 
 
 #header_menu
@@ -26,7 +27,7 @@ body
     margin-right: 10px;
 }
 
-#mainSection
+.mainSection
 {
     width: 75%;
     min-width: 400px;
@@ -68,8 +69,15 @@ h1
 .flux__nav
 {
     display: flex;
-    justify-content: space-around;
-    border : 1px solid black
+    justify-content: flex-end;
+    margin-left: 15px;
+    margin-bottom: 20px;
+}
+
+.flux__nav__link
+{
+    border: 1px, solid, black;
+    margin-left: 15px;
 }
 
 form
@@ -78,9 +86,10 @@ form
     text-align: justify;
 }
 
-a:visited
+a
 {
     color: black;
+    text-decoration: none;
 }
 
 .ticket
@@ -103,3 +112,17 @@ a:visited
     margin: 15px;
     padding: 15px;
 }
+
+#nav__username
+{
+    text-align: left;
+    margin-left: 15px;
+}
+
+.forms
+
+{
+    text-align: center;
+    text-align: justify;
+}
+

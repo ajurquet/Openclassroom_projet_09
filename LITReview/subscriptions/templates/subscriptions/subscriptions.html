@@ -2,36 +2,45 @@
 {% block content %}
     <h2 style="text-align: center;">Suivre d'autres utilisateurs</h2>
 
+{% comment %} # user = models.ForeignKey(related_name='following')
+                followed_user = models.ForeignKey(related_name='followed_by') {% endcomment %}
+
+
     <form method="POST" enctype="multipart/form-data">
         {% csrf_token %}
         <div class="forms">
-            {{ form.followed_user }}
-            
+            <div>{{ form }}</div>
+  
             <input type="submit" value="Envoyer">
-        </div>
+        </div> 
     </form>
 
     <h2 style="text-align: center;">Abonnements</h2>
-    <ul>
 
-    {% if users_user_follow %}
-        {% for user in users_user_follow %}
-        <li>{{ users_user_follow.username}}</li><a href=#>Se désabonner</a> 
-        {% endfor %}  
+    <ul>
+        {% for user in users %}
+            {% if user.following %}
+                <li>{{ user.following.username}}</li><a href=#>Se désabonner</a> 
+            {% endif %}
+    </ul>    
+        {% empty %}
+            <p>Vous ne suivez aucun utilisateurs</p> 
+        {% endfor %}
     
-    {% else %}
-        <p>Vous ne suivez aucun utilisateurs</p>
+        
     
 
     <h2 style="text-align: center;">Abonnés</h2>
-
-    {% if users_subscribes_user %}
-        {% for user in users_subscribes_user %}
-        <li>{{ users_subscribes_user.username}}</li><a href=#>Se désabonner</a> 
+    <ul>
+        {% for user in users %}
+            {% if user.followed_by %}
+                <li>{{ user.followed_by.username }}</li>
+            {% endif %}
+        
+    </ul>
+        {% empty %}
+            <p>Aucun utilisateurs ne vous suit</p>
         {% endfor %}  
-    
-    {% else %}
-        <p>Vous ne suivez aucun utilisateurs</p>
 
     
 {% endblock content%}

@@ -1,0 +1,13 @@
+{% extends "index.html" %}
+{% block content %}
+
+    <h2 style="text-align: center;">Supprimer un ticket</h2>
+
+    <p>Etes-vous sûr de voulaoir supprimer le ticket : {{ ticket.title }}?</p>
+
+    <form method="POST" enctype="multipart/form-data">
+        {% csrf_token %}
+        <input type="submit" value="Oui, effacer">
+    </form>
+        
+{% endblock content %}

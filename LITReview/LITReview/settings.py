@@ -54,8 +54,9 @@ MIDDLEWARE = [
 
 ROOT_URLCONF = 'LITReview.urls'
 
+
 TEMPLATES = [
-    {
+    {   
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
         'DIRS': [Path(BASE_DIR, 'templates')],
         'APP_DIRS': True,
@@ -122,7 +123,6 @@ USE_TZ = True
 
 STATIC_URL = '/review/static/'
 
-
 MEDIA_ROOT = Path(BASE_DIR, 'medias')
 MEDIA_URL = '/medias/'
 
@@ -133,6 +133,5 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 LOGIN_REDIRECT_URL = 'flux'
 LOGIN_URL = 'login'
-# AUTH_USER_MODEL = 'users.CustomUser'
 
 
