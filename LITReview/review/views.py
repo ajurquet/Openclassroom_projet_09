@@ -5,6 +5,7 @@ from django.shortcuts import redirect, render
 from django.contrib.auth.decorators import login_required
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
 from django.urls import reverse_lazy
+from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from django.shortcuts import get_object_or_404
 
 
@@ -100,26 +101,52 @@ def posts(request):
     return render(request, "review/posts.html", context)
 
 
-class TicketUpdate(UpdateView):
+class TicketUpdate(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
     model = Ticket
-    fields = ['title', 'description', 'image']
-    # template = "review/templates/review/ticket_form.html"
+    form_class = TicketForm
+    template_name_suffix = '_update_form'
+    success_url = reverse_lazy('posts')
+
+    def test_func(self):
+        ticket = self.get_object()
+        if self.request.user == ticket.user:
+            return True
+        return False
 
 
-
-class TicketDelete(DeleteView):
+class TicketDelete(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
     model = Ticket
     success_url = reverse_lazy('posts')
 
+    def test_func(self):
+        ticket = self.get_object()
+        if self.request.user == ticket.user:
+            return True
+        return False
 
-class ReviewUpdate(UpdateView):
+
+class ReviewUpdate(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
     model = Review
-    fields = ['rating', 'headline', 'body']
+    form_class = ReviewForm
+    template_name_suffix = '_update_form'
+    success_url = reverse_lazy('posts')
+
+    def test_func(self):
+        review = self.get_object()
+        if self.request.user == review.user:
+            return True
+        return False
 
 
-class ReviewDelete(DeleteView):
+class ReviewDelete(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
     model = Review
     success_url = reverse_lazy('posts')
+
+    def test_func(self):
+        review = self.get_object()
+        if self.request.user == review.user:
+            return True
+        return False
 
 
  # if request.method == "GET":

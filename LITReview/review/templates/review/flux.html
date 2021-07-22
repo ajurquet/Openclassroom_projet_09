@@ -22,7 +22,10 @@
 
                 <h3 class="ticket__title">{{ ticket.title }}</h3>
                 <p class="ticket__description">{{ ticket.description }}</p>
-                <img class="ticket__image" src="{{ ticket.image.url }}">
+                {% if ticket.image %}
+                    <img class="ticket__image" src="{{ ticket.image.url }}">
+                {% endif %}
+                
         </section>
     {% endfor %}
 

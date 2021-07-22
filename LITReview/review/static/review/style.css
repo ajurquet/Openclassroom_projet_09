@@ -126,3 +126,8 @@ a
     text-align: justify;
 }
 
+.btn
+{
+    border: 1px, solid, black;
+    margin-left: 15 px;
+}
