@@ -7,8 +7,47 @@
         <a class="flux__nav__link" href="{% url 'create_review'%}">Créer une critique</a>
     </div>
 
+
+
+
+    {% comment %} Openclassrooms methode{% endcomment %}
+    {% for post in posts %}
+        {% if post.content_type == 'TICKET' %}
+            <section class="ticket">
+               {% include 'review/ticket_snippet.html' %}
+            </section>
+        {% elif post.content_type == 'REVIEW' %}
+           {% include 'review/review_snippet.html' %}
+        {% endif %}
+    {% endfor %} 
+
+
+
+{% comment %} 
+    {% for post in all_posts %}
+        {% if post.ticket.id %}
+            <section class="ticket">
+                {% if  ticket.user.id == current_user.id%}
+                    <div class="ticket__usernameAndDate"></div>
+                    <div>Vous avez demandé une critique</div>
+                    <div>{{ post.ticket.time_created }}</div>
+                {% else %}
+                    <div class="ticket__usernameAndDate"></div>
+                    <div>{{ post.ticket.user.username }} a demandé une critique</div>
+                    <div>{{ post.ticket.time_created }}</div>
+                {% endif %}
+
+                    <h3 class="ticket__title">{{ post.ticket.title }}</h3>
+                    <p class="ticket__description">{{ post.ticket.description }}</p>
+                    {% if ticket.image %}
+                        <img class="ticket__image" src="{{ post.ticket.image.url }}">
+                    {% endif %}
+            </section>
+        {% endif %}
+    {% endfor %} {% endcomment %}
+
     {% comment %} Bloc ticket {% endcomment %}
-    {% for ticket in tickets %}
+    {% comment %} {% for ticket in tickets %}
         <section class="ticket">
             {% if  ticket.user.id == current_user.id%}
                 <div class="ticket__usernameAndDate"></div>
@@ -27,11 +66,10 @@
                 {% endif %}
                 
         </section>
-    {% endfor %}
+    {% endfor %} {% endcomment %}
 
         {% comment %} Bloc review {% endcomment %}
-        {% for review in reviews %}
-            {% comment %} {% if review.ticket == ticket %} {% endcomment %}
+        {% comment %} {% for review in reviews %}
             <section class="review">
                 {% if  review.user.id == current_user.id%}
                     <div class="review__usernameAndDate"></div>
@@ -65,6 +103,6 @@
                     <img class="ticket__image" src="{{ review.ticket.image.url }}">
                 </section>
             </section>
-        {% endfor %}
+        {% endfor %} {% endcomment %}
      
 {% endblock content%}

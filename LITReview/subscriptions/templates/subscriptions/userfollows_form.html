@@ -9,7 +9,8 @@
     <form method="POST" enctype="multipart/form-data">
         {% csrf_token %}
         <div class="forms">
-            <div>{{ form }}</div>
+            <div>{{ form.followed_user }}</div>
+            {% comment %} <div>{{ form }}</div> {% endcomment %}
             <input type="submit" value="Envoyer">
         </div> 
     </form>
@@ -17,8 +18,10 @@
     <h2 style="text-align: center;">Abonnements</h2>
 
     <ul>
-        {% for follower in followers %}
-            <li>{{ follower.followed_user }}</li><a href=#>Se désabonner</a> 
+        {% for user in users %}
+            {% if user.following %}
+                <li>{{ user.following.username}}</li><a href=#>Se désabonner</a> 
+            {% endif %}
     </ul>    
         {% empty %}
             <p>Vous ne suivez aucun utilisateurs</p> 
@@ -26,8 +29,10 @@
     
     <h2 style="text-align: center;">Abonnés</h2>
     <ul>
-        {% for subscriber in subscribers %}
-            <li>{{ subscriber.user }}</li>
+        {% for user in users %}
+            {% if user.followed_by %}
+                <li>{{ user.followed_by.username }}</li>
+            {% endif %}
     </ul>
         {% empty %}
             <p>Aucun utilisateurs ne vous suit</p>

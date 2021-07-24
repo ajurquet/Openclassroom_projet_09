@@ -9,13 +9,11 @@ from django.forms.models import ModelChoiceField
 from .models import UserFollows
 
 
-# class SubscriptionsForm(forms.ModelForm):
-#     class Meta:
-#         model = UserFollows
-#         fields = ['followed_user']
-#         labels = {"followed_user": ""}
-        # widgets = {'followed_user': models.CharField(max_length=128)}
+class SubscriptionsForm(forms.ModelForm):
+    class Meta:
+        model = UserFollows
+        fields = ['followed_user']
+        labels = {"followed_user": ""}
+        widgets = {'followed_user': forms.TextInput()}
 
 
-class SubscriptionsForm(forms.Form):
-    followed_user = forms.CharField(label="", max_length=128, required=True) 

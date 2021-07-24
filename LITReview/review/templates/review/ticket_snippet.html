@@ -1,0 +1,22 @@
+{% comment %} {% extends "index.html" %}
+{% block content %} {% endcomment %}
+
+    <section class="ticket">
+        {% if  post.user.id == user.id%}
+            <div class="ticket__usernameAndDate"></div>
+            <div>Vous avez demandé une critique</div>
+            <div>{{ post.time_created }}</div>
+        {% else %}
+            <div class="ticket__usernameAndDate"></div>
+            <div>{{ post.user.username }} a demandé une critique</div>
+            <div>{{ post.time_created }}</div>
+        {% endif %}
+
+        <h3 class="ticket__title">{{ post.title }}</h3>
+        <p class="ticket__description">{{ post.description }}</p>
+        {% if ticket.image %}
+            <img class="ticket__image" src="{{ post.image.url }}">
+        {% endif %}
+    </section>
+
+{% comment %} {% endblock content %} {% endcomment %}
