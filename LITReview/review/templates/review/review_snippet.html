@@ -1,32 +1,34 @@
 <section class="review">
-    {% if  review.user.id == current_user.id%}
+    {% if  post.user.id == post.id%}
         <div class="review__usernameAndDate"></div>
         <div>Vous avez publié une critique</div>
-        <div>{{ review.time_created }}</div>
+        <div>{{ post.time_created }}</div>
 
     {% else %}
         <div class="review__usernameAndDate"></div>
-        <div>{{ review.user.username }} a publié une critique</div>
-        <div>{{ review.time_created }}</div>
+        <div>{{ post.user.username }} a publié une critique</div>
+        <div>{{ post.time_created }}</div>
     {% endif %}
-        <h3>{{ review.headline }}</h3>
+        <h3>{{ post.headline }}</h3>
         
-        <div>Note: {{review.rating}}<span> ☆</span>
+        <div>Note: {{post.rating}}<span> ☆</span>
         </div>
-        <div>{{ review.body }}</div>
+        <div>{{ post.body }}</div>
+</section>
 
-    <section class="ticket">
-    {% if  review.ticket.user.id == current_user.id%}
-        <div class="ticket__usernameAndDate"></div>
-        <div>Vous avez demandé une critique</div>
-        <div>{{review.ticket.time_created}}</div>
-    {% else %}
-        <div class="ticket__usernameAndDate"></div>
-        <div>{{review.ticket.user.username}} a demandé une critique</div>
-        <div>{{review.ticket.time_created}}</div>
-    {% endif %}
+<section class="ticket">
+{% if  post.user.id == post.id%}
+    <div class="ticket__usernameAndDate"></div>
+    <div>Vous avez demandé une critique</div>
+    <div>{{post.ticket.time_created}}</div>
+{% else %}
+    <div class="ticket__usernameAndDate"></div>
+    <div>{{post.ticket.user.username}} a demandé une critique</div>
+    <div>{{post.ticket.time_created}}</div>
+{% endif %}
 
-        <h3 class="ticket__title">{{ review.ticket.title }}</h3>
-        <p class="ticket__description">{{ review.ticket.description }}</p>
-        <img class="ticket__image" src="{{ review.ticket.image.url }}">
+    <h3 class="ticket__title">{{ post.ticket.title }}</h3>
+    <p class="ticket__description">{{ post.ticket.description }}</p>
+    <img class="ticket__image" src="{{ post.ticket.image.url }}">
+        
 </section>

@@ -2,10 +2,6 @@
 {% block content %}
     <h2 style="text-align: center;">Suivre d'autres utilisateurs</h2>
 
-{% comment %} # user = models.ForeignKey(related_name='following')
-                followed_user = models.ForeignKey(related_name='followed_by') {% endcomment %}
-
-
     <form method="POST" enctype="multipart/form-data">
         {% csrf_token %}
         <div class="forms">
@@ -17,12 +13,23 @@
     <h2 style="text-align: center;">Abonnements</h2>
 
     <ul>
-        {% for follower in followers %}
-            <li>{{ follower.followed_user }}</li><a href=#>Se désabonner</a> 
+        {% for user in user_follows %}
+            {% if  user.user == current_user%}
+                <li>{{ user.followed_user }}</li><a href={% url 'subscriptions_delete' user.pk %}>Se désabonner</a> 
+            {% endif %}
     </ul>    
         {% empty %}
             <p>Vous ne suivez aucun utilisateurs</p> 
         {% endfor %}
+
+
+    {% comment %} <ul>
+        {% for follower in followers %}
+            <li>{{ follower.followed_user }}</li><a href={% url 'subscriptions_delete' pk=follower.pk %}}>Se désabonner</a> 
+    </ul>    
+        {% empty %}
+            <p>Vous ne suivez aucun utilisateurs</p> 
+        {% endfor %} {% endcomment %}
     
     <h2 style="text-align: center;">Abonnés</h2>
     <ul>
@@ -33,5 +40,4 @@
             <p>Aucun utilisateurs ne vous suit</p>
         {% endfor %}  
 
-    <script src="/review/static/review/code.js"></script>
 {% endblock content%}

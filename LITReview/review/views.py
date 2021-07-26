@@ -77,6 +77,36 @@ def create_review(request):
 
 
 @login_required
+def create_review_existing_ticket(request, id_ticket=None):
+    title = "Créer une review"
+
+    existing_ticket = Ticket.objects.get(pk=id_ticket)
+
+    if request.method == "POST":
+        try:                                
+            Review.objects.create(ticket=existing_ticket,
+                            headline=request.POST['headline'],
+                            rating=request.POST['rating'],
+                            body=request.POST['body'],
+                            user=request.user
+                            )
+        except:
+            form = ReviewForm(request.POST)
+        else:
+            messages.success(request, f'Review créée !')
+            return redirect("flux")
+
+    else:
+        form_review = ReviewForm()
+
+    return render(request, 'review/createreview_existing_ticket.html',{
+                                                      'title' : title,
+                                                      'form_review': form_review,
+                                                      'existing_ticket': existing_ticket
+                                                      })
+
+
+@login_required
 def flux(request):
     user = request.user
     
@@ -88,13 +118,7 @@ def flux(request):
 
     print(users_to_exclude)
 
-    # users1_to_exclude = []
-    # for r in Review.objects.all():
-    #     if r.ticket.user == request.user:
-    #         users1_to_exclude.append(r.pk)
-    # print(users1_to_exclude)
-
-    reviews = Review.objects.filter(user=request.user).exclude(user_id__in=users_to_exclude) 
+    reviews = Review.objects.filter(user=request.user) | Review.objects.exclude(user_id__in=users_to_exclude) 
     # returns queryset of reviews
     reviews = reviews.annotate(content_type=Value('REVIEW', CharField()))
 
@@ -108,16 +132,11 @@ def flux(request):
         followers_list.append(follower.followed_user.pk)
     print(followers_list)
 
-    tickets = Ticket.objects.filter(user_id__in=followers_list)
+    tickets = Ticket.objects.filter(user_id__in=followers_list) | Ticket.objects.filter(user=request.user)
     print(tickets)
-    tickets = Ticket.objects.filter(user=request.user)
-    print(tickets)
-    tickets = Ticket.objects.filter(user_id__in=followers_list).filter(user=request.user)
-    print(tickets)
-
+ 
     # returns queryset of tickets
     tickets = tickets.annotate(content_type=Value('TICKET', CharField()))
-
 
     # combine and sort the two types of posts
     posts = sorted(

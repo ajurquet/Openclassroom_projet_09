@@ -7,9 +7,6 @@
         <a class="flux__nav__link" href="{% url 'create_review'%}">Créer une critique</a>
     </div>
 
-
-
-
     {% comment %} Openclassrooms methode{% endcomment %}
     {% for post in posts %}
         {% if post.content_type == 'TICKET' %}

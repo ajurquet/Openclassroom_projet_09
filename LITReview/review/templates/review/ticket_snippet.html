@@ -14,9 +14,10 @@
 
         <h3 class="ticket__title">{{ post.title }}</h3>
         <p class="ticket__description">{{ post.description }}</p>
-        {% if ticket.image %}
+        {% if post.image %}
             <img class="ticket__image" src="{{ post.image.url }}">
         {% endif %}
+        <a class="btn" href="{% url 'create_review_existing_ticket' id_ticket=post.pk %}">Créer une critique</a>
     </section>
 
 {% comment %} {% endblock content %} {% endcomment %}

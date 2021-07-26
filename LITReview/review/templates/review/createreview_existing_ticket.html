@@ -1,0 +1,36 @@
+{% extends "index.html" %}
+{% block content %}
+
+    <h2 style="text-align: center;">Créer une review</h2>
+
+    <section class="create_review">
+    <p>Vous postez une critique en réponse à:</p>
+        <form method="POST" enctype="multipart/form-data">
+            {% csrf_token %}
+            <section class="ticket">
+                {% if  existing_ticket.user.id == user.id%}
+                    <div class="ticket__usernameAndDate"></div>
+                    <div>Vous avez demandé une critique</div>
+                    <div>{{ existing_ticket.time_created }}</div>
+                {% else %}
+                    <div class="ticket__usernameAndDate"></div>
+                    <div>{{ existing_ticket.user.username }} a demandé une critique</div>
+                    <div>{{ existing_ticket.time_created }}</div>
+                {% endif %}
+
+                <h3 class="ticket__title">{{ existing_ticket.title }}</h3>
+                <p class="ticket__description">{{ existing_ticket.description }}</p>
+                {% if existing_ticket.image %}
+                    <img class="ticket__image" src="{{ existing_ticket.image.url }}">
+                {% endif %}
+            </section>
+
+            <div class="forms">
+                {{ form_review.as_p }}
+                <input type="submit" value="Envoyer">
+            </div>
+        </form>
+    </section>
+
+    
+{% endblock content%}
