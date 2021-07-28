@@ -3,103 +3,16 @@
     <h2 style="text-align: center;">Flux utilisateur</h2>
 
     <div class="flux__nav">
-        <a class="flux__nav__link" href="{% url 'create_ticket'%}">Demander une critique</a>
-        <a class="flux__nav__link" href="{% url 'create_review'%}">Créer une critique</a>
+        <strong><a class="flux__nav__link" href="{% url 'create_ticket'%}">Demander une critique</a></strong>
+        <strong><a class="flux__nav__link" href="{% url 'create_review'%}">Créer une critique</a></strong>
     </div>
 
-    {% comment %} Openclassrooms methode{% endcomment %}
     {% for post in posts %}
-        {% if post.content_type == 'TICKET' %}
-            <section class="ticket">
+        {% if post.content_type == 'TICKET' %}   
                {% include 'review/ticket_snippet.html' %}
-            </section>
         {% elif post.content_type == 'REVIEW' %}
            {% include 'review/review_snippet.html' %}
         {% endif %}
     {% endfor %} 
 
-
-
-{% comment %} 
-    {% for post in all_posts %}
-        {% if post.ticket.id %}
-            <section class="ticket">
-                {% if  ticket.user.id == current_user.id%}
-                    <div class="ticket__usernameAndDate"></div>
-                    <div>Vous avez demandé une critique</div>
-                    <div>{{ post.ticket.time_created }}</div>
-                {% else %}
-                    <div class="ticket__usernameAndDate"></div>
-                    <div>{{ post.ticket.user.username }} a demandé une critique</div>
-                    <div>{{ post.ticket.time_created }}</div>
-                {% endif %}
-
-                    <h3 class="ticket__title">{{ post.ticket.title }}</h3>
-                    <p class="ticket__description">{{ post.ticket.description }}</p>
-                    {% if ticket.image %}
-                        <img class="ticket__image" src="{{ post.ticket.image.url }}">
-                    {% endif %}
-            </section>
-        {% endif %}
-    {% endfor %} {% endcomment %}
-
-    {% comment %} Bloc ticket {% endcomment %}
-    {% comment %} {% for ticket in tickets %}
-        <section class="ticket">
-            {% if  ticket.user.id == current_user.id%}
-                <div class="ticket__usernameAndDate"></div>
-                <div>Vous avez demandé une critique</div>
-                <div>{{ ticket.time_created }}</div>
-            {% else %}
-                <div class="ticket__usernameAndDate"></div>
-                <div>{{ ticket.user.username }} a demandé une critique</div>
-                <div>{{ ticket.time_created }}</div>
-            {% endif %}
-
-                <h3 class="ticket__title">{{ ticket.title }}</h3>
-                <p class="ticket__description">{{ ticket.description }}</p>
-                {% if ticket.image %}
-                    <img class="ticket__image" src="{{ ticket.image.url }}">
-                {% endif %}
-                
-        </section>
-    {% endfor %} {% endcomment %}
-
-        {% comment %} Bloc review {% endcomment %}
-        {% comment %} {% for review in reviews %}
-            <section class="review">
-                {% if  review.user.id == current_user.id%}
-                    <div class="review__usernameAndDate"></div>
-                    <div>Vous avez publié une critique</div>
-                    <div>{{ review.time_created }}</div>
-
-                {% else %}
-                    <div class="review__usernameAndDate"></div>
-                    <div>{{ review.user.username }} a publié une critique</div>
-                    <div>{{ review.time_created }}</div>
-                {% endif %}
-                    <h3>{{ review.headline }}</h3>
-                    
-                    <div>Note: {{review.rating}}<span> ☆</span>
-                    </div>
-                    <div>{{ review.body }}</div>
-            
-                <section class="ticket">
-                {% if  review.ticket.user.id == current_user.id%}
-                    <div class="ticket__usernameAndDate"></div>
-                    <div>Vous avez demandé une critique</div>
-                    <div>{{review.ticket.time_created}}</div>
-                {% else %}
-                    <div class="ticket__usernameAndDate"></div>
-                    <div>{{review.ticket.user.username}} a demandé une critique</div>
-                    <div>{{review.ticket.time_created}}</div>
-                {% endif %}
-
-                    <h3 class="ticket__title">{{ review.ticket.title }}</h3>
-                    <p class="ticket__description">{{ review.ticket.description }}</p>
-                    <img class="ticket__image" src="{{ review.ticket.image.url }}">
-                </section>
-            </section>
-        {% endfor %} {% endcomment %}
-     
 {% endblock content%}

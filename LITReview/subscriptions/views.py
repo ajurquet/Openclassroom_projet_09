@@ -1,5 +1,6 @@
 from django.contrib import messages
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
+from django.http import request
 from django.shortcuts import render
 from django.contrib.auth.models import User
 from django.shortcuts import redirect, render
@@ -43,9 +44,9 @@ def subscriptions(request):
     return render(request, 'subscriptions/subscriptions.html', {
                                                     'title' : title,
                                                     'form': form,
-                                                    'users': users,
+                                                    # 'users': users,
                                                     'current_user': user,
-                                                    'followers' : followers,
+                                                    # 'followers' : followers,
                                                     'subscribers': subscribers,
                                                     'user_follows': user_follows
                                                      })
@@ -64,7 +65,7 @@ def subscriptions(request):
 
 
 class SubscriptionDeleteView(LoginRequiredMixin,
-                            UserPassesTestMixin,
+                            
                             DeleteView,
                             SuccessMessageMixin
                             ):
@@ -72,11 +73,21 @@ class SubscriptionDeleteView(LoginRequiredMixin,
     success_url = reverse_lazy('subscriptions')
     success_message = "Abonnement résilié"
 
-    def test_func(self):
-        user_follow = self.get_object()
-        if self.request.user == user_follow.user:
-            return True
-        return False
+    # def test_func(self):
+    #     user_follow = self.get_object(self.request.user)
+    #     if self.request.user == user_follow:
+    #         return True
+    #     return False
+    
+    def get_context_data(self, **kwargs):
+        context  = super().get_context_data(**kwargs)
+        current_user = User.objects.get(id=self.request.user.id)
+        print(current_user)
+        print(context)
+        context['followed_user'] = UserFollows.objects.exclude(user=current_user)
+        print(context)
+        
+        return context
 
 
     # users_to_follow = User.objects.exclude(id=request.user.id)

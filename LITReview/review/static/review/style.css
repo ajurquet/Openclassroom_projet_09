@@ -99,13 +99,6 @@ a
     padding: 15px;
 }
 
-.ticket__usernameAndDate
-{
-    display: flex;
-    justify-content: space-between
-    
-}
-
 .review
 {
     border: 1px solid black;
@@ -120,7 +113,6 @@ a
 }
 
 .forms
-
 {
     text-align: center;
     text-align: justify;
@@ -135,4 +127,9 @@ a
 .create_review
 {
     border: 1px, solid, black;
+}
+
+.subscriber_list
+{
+    display: flex;
 }

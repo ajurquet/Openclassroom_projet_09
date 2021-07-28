@@ -15,21 +15,12 @@
     <ul>
         {% for user in user_follows %}
             {% if  user.user == current_user%}
-                <li>{{ user.followed_user }}</li><a href={% url 'subscriptions_delete' user.pk %}>Se désabonner</a> 
+                <li class="subscriber_list">{{ user.followed_user }}</li><a href={% url 'subscriptions_delete' user.pk %}>Se désabonner</a> 
             {% endif %}
     </ul>    
         {% empty %}
             <p>Vous ne suivez aucun utilisateurs</p> 
         {% endfor %}
-
-
-    {% comment %} <ul>
-        {% for follower in followers %}
-            <li>{{ follower.followed_user }}</li><a href={% url 'subscriptions_delete' pk=follower.pk %}}>Se désabonner</a> 
-    </ul>    
-        {% empty %}
-            <p>Vous ne suivez aucun utilisateurs</p> 
-        {% endfor %} {% endcomment %}
     
     <h2 style="text-align: center;">Abonnés</h2>
     <ul>
@@ -38,6 +29,6 @@
     </ul>
         {% empty %}
             <p>Aucun utilisateurs ne vous suit</p>
-        {% endfor %}  
+        {% endfor %}
 
 {% endblock content%}

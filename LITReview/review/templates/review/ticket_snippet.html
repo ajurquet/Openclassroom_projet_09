@@ -1,5 +1,3 @@
-{% comment %} {% extends "index.html" %}
-{% block content %} {% endcomment %}
 
     <section class="ticket">
         {% if  post.user.id == user.id%}
@@ -17,7 +15,10 @@
         {% if post.image %}
             <img class="ticket__image" src="{{ post.image.url }}">
         {% endif %}
-        <a class="btn" href="{% url 'create_review_existing_ticket' id_ticket=post.pk %}">Créer une critique</a>
+        
+        {% if not post.ticket %}
+            <strong><a class="btn" href="{% url 'create_review_existing_ticket' id_ticket=post.pk %}">Créer une critique</a></strong>
+        {% endif %}
+        
     </section>
 
-{% comment %} {% endblock content %} {% endcomment %}

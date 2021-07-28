@@ -1,14 +1,11 @@
+from subscriptions.models import UserFollows
 from django.contrib import messages
-from django.contrib.messages.api import success
-from django.urls.base import reverse
 from review.models import Review, Ticket
 from django.shortcuts import redirect, render
 from django.contrib.auth.decorators import login_required
 from django.views.generic.edit import UpdateView, DeleteView
 from django.urls import reverse_lazy
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
-from django.shortcuts import get_object_or_404
-from operator import attrgetter
 from itertools import chain
 from django.db.models import CharField, Value
 
@@ -100,41 +97,61 @@ def create_review_existing_ticket(request, id_ticket=None):
         form_review = ReviewForm()
 
     return render(request, 'review/createreview_existing_ticket.html',{
-                                                      'title' : title,
-                                                      'form_review': form_review,
-                                                      'existing_ticket': existing_ticket
-                                                      })
+                                            'title' : title,
+                                            'form_review': form_review,
+                                            'existing_ticket': existing_ticket
+                                            })
 
 
 @login_required
 def flux(request):
-    user = request.user
-    
+    current_user = request.user
+    users_follows = UserFollows.objects.all()
+
+    # Ids of all my followers
+    followers = current_user.following.all()
+    followers_id = []
+    for follower in followers:
+        followers_id.append(follower.followed_user.pk)
+
+    reviews = Review.objects.filter()
+
+    # Ids of users who answered my tickets
+    user_tickets = Ticket.objects.filter(user=current_user)
+
+    ids_of_ticket_answerers = []
+    for ticket in Ticket.objects.filter(user=current_user):
+        for review in Review.objects.all():
+            if review.ticket == ticket:
+                ids_of_ticket_answerers.append(review.user.pk)
+    print(f'Ids des répondant : {ids_of_ticket_answerers}')
+
+    test_reviews = Review.objects.filter(user=request.user) | Review.objects.filter(user_id__in=followers_id) 
+    print(test_reviews)
+
     # Queries on reviews
-    users_to_exclude = []
-    for r in Review.objects.all():
-        if r.ticket.user == request.user:
-            users_to_exclude.append(r.pk)
+    users_to_include = []
+    for review in Review.objects.all():
+        if review.user == request.user: # Si la review est l'utilisateur
+            users_to_include.append(review.user.pk)
+        if review.user == request.user.following: # Si la review est d'un des abonnés
+            review.user.append(review.user.pk)
+        if review.ticket.user == request.user: # Si le ticket est de l'utilisateur
+            users_to_include.append(review.ticket.user.pk)
 
-    print(users_to_exclude)
+    reviews = Review.objects.filter(user=request.user) | Review.objects.filter(user_id__in=followers_id)| Review.objects.filter(user_id__in=ids_of_ticket_answerers)
 
-    reviews = Review.objects.filter(user=request.user) | Review.objects.exclude(user_id__in=users_to_exclude) 
     # returns queryset of reviews
     reviews = reviews.annotate(content_type=Value('REVIEW', CharField()))
 
 
     #Queries on tickets
-    followers = user.following.all()
-    print(f"followers : {followers}")
-
+    followers = current_user.following.all()
     followers_list = []
     for follower in followers:
         followers_list.append(follower.followed_user.pk)
-    print(followers_list)
 
     tickets = Ticket.objects.filter(user_id__in=followers_list) | Ticket.objects.filter(user=request.user)
-    print(tickets)
- 
     # returns queryset of tickets
     tickets = tickets.annotate(content_type=Value('TICKET', CharField()))
 
@@ -145,35 +162,11 @@ def flux(request):
         reverse=True
     )
 
+    for post in posts:
+        print(post)
+
     return render(request, 'review/flux.html', context={'posts': posts})
-
-
-
-
-# title = "Flux"
-#     current_user = request.user
-#     all_posts = [] 
-#     tickets = Ticket.objects.filter().order_by('-time_created')
-#     reviews = Review.objects.filter().order_by('-time_created')
-#     for ticket in tickets:
-#         all_posts.append(ticket)
-#     for review in reviews:
-#         all_posts.append(review)
-#     print(all_posts)
-#     all_posts.sort(key=attrgetter('time_created'), reverse=True)
-#     print(all_posts)
-
-#     context = {"tickets" : tickets,
-#                "title" : title,
-#                "current_user": current_user,
-#                "reviews": reviews,
-#                "all_posts": all_posts
-#                }
-#     return render(request, "review/flux.html", context)
-
-
-   
-
+ 
     
 @login_required
 def posts(request):
