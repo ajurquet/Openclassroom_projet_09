@@ -36,7 +36,7 @@ pip install venv
 
 Vous devez ensuite créer et activer un environnement en entrant les commandes suivantes dans le terminal:
 
-###LINUX MACOS
+##LINUX MACOS
 
 ```bash
 python3 -m venv env
@@ -52,7 +52,7 @@ pip install -r requirement.txt
 ```
 afin d'installer toutes les librairies.
 
-###WINDOWS
+##WINDOWS
 
 ```bash
 python -m venv env
