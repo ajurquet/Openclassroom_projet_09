@@ -1,6 +1,5 @@
 from django import forms
 from django.contrib.auth.models import User
-from django import forms
 
 from .models import UserFollows
 
@@ -18,5 +17,3 @@ class SubscriptionsForm(forms.ModelForm):
             if followed_user == user:
                 raise ValueError('Vous ne pouvez pas vous ajouter')
             return followed_user
-
-

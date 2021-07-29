@@ -6,6 +6,7 @@ from. import views
 
 urlpatterns = [
     path('', views.subscriptions, name='subscriptions'),
-    path('<int:pk>/delete', SubscriptionDeleteView.as_view(),
-                            name='subscriptions_delete')
+    path('<int:pk>/delete',
+         SubscriptionDeleteView.as_view(),
+         name='subscriptions_delete')
 ]

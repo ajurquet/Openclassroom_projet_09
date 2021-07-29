@@ -35,7 +35,9 @@ pip install venv
 ```
 
 Vous devez ensuite créer et activer un environnement en entrant les commandes suivantes dans le terminal:
+
 ###LINUX MACOS
+
 ```bash
 python3 -m venv env
 ```
@@ -50,7 +52,8 @@ pip install -r requirement.txt
 ```
 afin d'installer toutes les librairies.
 
-####WINDOWS
+###WINDOWS
+
 ```bash
 python -m venv env
 ```
@@ -81,4 +84,12 @@ Le mot de passe est le même pour les 3 : "setting4321" (sans les guillemets).
 Vous pouvez vous connecter à l'interface d'administration via le compte "admin", mot de passe "admin" (sans les guillemets).
 
 
+## Rapport flake8
 
+Le programme est conforme à la PEP8, le repository contient un rapport flake8, qui n'affiche aucune erreur. Il est possible d'en générer un nouveau en installant le module ```flake8``` et en entrant dans le terminal :
+
+```bash
+flake8
+```
+
+Le fichier ```setup.cfg``` à la racine contient les paramètres concernant la génération du rapport.

@@ -1,6 +1,5 @@
 from django.contrib import messages
 from django.contrib.auth.mixins import LoginRequiredMixin
-from django.shortcuts import render
 from django.contrib.auth.models import User
 from django.shortcuts import redirect, render
 from django.contrib.auth.decorators import login_required
@@ -19,28 +18,28 @@ def subscriptions(request):
     user_follows = UserFollows.objects.all()
     user = request.user
     subscribers = user.followed_by.all()
-     
+
     if request.method == "POST":
         try:
             entry = request.POST['followed_user']
             user_to_follow = User.objects.get(username=entry)
-            
+
             for u in users:
                 if u.username == entry:
                     UserFollows.objects.create(user=request.user,
-                                               followed_user = user_to_follow,
+                                               followed_user=user_to_follow,
                                                )
-        except:
+        except Exception:
             form = SubscriptionsForm(request.POST)
-            messages.error(request, f'Erreur')  
+            messages.error(request, 'Erreur')
         else:
             messages.success(request, "Utilisateur suivi !")
             return redirect("subscriptions")
     else:
         form = SubscriptionsForm()
-        
+
     return render(request, 'subscriptions/subscriptions.html', {
-                                                'title' : title,
+                                                'title': title,
                                                 'form': form,
                                                 'current_user': user,
                                                 'subscribers': subscribers,
@@ -49,19 +48,16 @@ def subscriptions(request):
 
 
 class SubscriptionDeleteView(LoginRequiredMixin,
-                            DeleteView,
-                            SuccessMessageMixin
-                            ):
+                             DeleteView,
+                             SuccessMessageMixin
+                             ):
     model = UserFollows
     success_url = reverse_lazy('subscriptions')
     success_message = "Abonnement résilié"
-    
+
     def get_context_data(self, **kwargs):
-        context  = super().get_context_data(**kwargs)
+        context = super().get_context_data(**kwargs)
         current_user = User.objects.get(id=self.request.user.id)
-        context['followed_user'] = UserFollows.objects.exclude(user=current_user)
+        context['followed_user'] = UserFollows.objects.exclude(
+                                                            user=current_user)
         return context
-
-
-    
-
