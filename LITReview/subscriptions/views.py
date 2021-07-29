@@ -1,6 +1,5 @@
 from django.contrib import messages
-from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
-from django.http import request
+from django.contrib.auth.mixins import LoginRequiredMixin
 from django.shortcuts import render
 from django.contrib.auth.models import User
 from django.shortcuts import redirect, render
@@ -19,7 +18,6 @@ def subscriptions(request):
     users = User.objects.all()
     user_follows = UserFollows.objects.all()
     user = request.user
-    followers = user.following.all()
     subscribers = user.followed_by.all()
      
     if request.method == "POST":
@@ -42,73 +40,27 @@ def subscriptions(request):
         form = SubscriptionsForm()
         
     return render(request, 'subscriptions/subscriptions.html', {
-                                                    'title' : title,
-                                                    'form': form,
-                                                    # 'users': users,
-                                                    'current_user': user,
-                                                    # 'followers' : followers,
-                                                    'subscribers': subscribers,
-                                                    'user_follows': user_follows
-                                                     })
-
-
-# @login_required
-# def unsubscribe(request, userfollow_id):
-#     title = "Se désabonner"
-#     userfollow_instance = UserFollows.objects.get(pk=userfollow_id)
-    
-#     return render(request, 'subcriptions/userfollows_confirm_delete.html',{
-#                                             "title" : title,
-#                                             "instance": userfollow_instance
-                                            
-#                                             })
+                                                'title' : title,
+                                                'form': form,
+                                                'current_user': user,
+                                                'subscribers': subscribers,
+                                                'user_follows': user_follows
+                                                })
 
 
 class SubscriptionDeleteView(LoginRequiredMixin,
-                            
                             DeleteView,
                             SuccessMessageMixin
                             ):
     model = UserFollows
     success_url = reverse_lazy('subscriptions')
     success_message = "Abonnement résilié"
-
-    # def test_func(self):
-    #     user_follow = self.get_object(self.request.user)
-    #     if self.request.user == user_follow:
-    #         return True
-    #     return False
     
     def get_context_data(self, **kwargs):
         context  = super().get_context_data(**kwargs)
         current_user = User.objects.get(id=self.request.user.id)
-        print(current_user)
-        print(context)
         context['followed_user'] = UserFollows.objects.exclude(user=current_user)
-        print(context)
-        
         return context
-
-
-    # users_to_follow = User.objects.exclude(id=request.user.id)
-
-    # users_followed = User.objects.all()
-    # users_followed = users_followed.following.all()
-
-    # users_subscribes_user = User.objects.all()
-    # users_subscribes_user = users_subscribes_user.followed_by.all()
-
-
-
-# class SubscriptionCreate(CreateView):
-#     model = UserFollows
-#     form_class = SubscriptionsForm
-
-#     def post(self, request, *args, **kwargs):
-#         form = self.form_class(request.POST)
-#         if form.is_valid():
-#             form.save()
-#         return render(request, "subscriptions/userfollows_form.html", {'form': form})
 
 
     

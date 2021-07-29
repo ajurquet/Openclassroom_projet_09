@@ -1,4 +1,3 @@
-
     <section class="ticket">
         {% if  post.user.id == user.id%}
             <div class="ticket__usernameAndDate"></div>
@@ -9,16 +8,13 @@
             <div>{{ post.user.username }} a demandé une critique</div>
             <div>{{ post.time_created }}</div>
         {% endif %}
-
         <h3 class="ticket__title">{{ post.title }}</h3>
         <p class="ticket__description">{{ post.description }}</p>
         {% if post.image %}
             <img class="ticket__image" src="{{ post.image.url }}">
         {% endif %}
-        
         {% if not post.ticket %}
             <strong><a class="btn" href="{% url 'create_review_existing_ticket' id_ticket=post.pk %}">Créer une critique</a></strong>
         {% endif %}
-        
     </section>
 

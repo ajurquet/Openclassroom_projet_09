@@ -1,12 +1,10 @@
 {% extends "index.html" %}
 {% block content %}
     <h2 style="text-align: center;">Flux utilisateur</h2>
-
     <div class="flux__nav">
         <strong><a class="flux__nav__link" href="{% url 'create_ticket'%}">Demander une critique</a></strong>
         <strong><a class="flux__nav__link" href="{% url 'create_review'%}">Créer une critique</a></strong>
     </div>
-
     {% for post in posts %}
         {% if post.content_type == 'TICKET' %}   
                {% include 'review/ticket_snippet.html' %}

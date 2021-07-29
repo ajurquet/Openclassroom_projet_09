@@ -1,7 +1,6 @@
 {% extends "index.html" %}
 {% block content %}
     <h2 style="text-align: center;">Suivre d'autres utilisateurs</h2>
-
     <form method="POST" enctype="multipart/form-data">
         {% csrf_token %}
         <div class="forms">
@@ -9,9 +8,7 @@
             <input type="submit" value="Envoyer">
         </div> 
     </form>
-
     <h2 style="text-align: center;">Abonnements</h2>
-
     <ul>
         {% for user in user_follows %}
             {% if  user.user == current_user%}
@@ -21,7 +18,6 @@
         {% empty %}
             <p>Vous ne suivez aucun utilisateurs</p> 
         {% endfor %}
-    
     <h2 style="text-align: center;">Abonnés</h2>
     <ul>
         {% for subscriber in subscribers %}
@@ -30,5 +26,4 @@
         {% empty %}
             <p>Aucun utilisateurs ne vous suit</p>
         {% endfor %}
-
 {% endblock content%}

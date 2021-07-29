@@ -6,7 +6,6 @@
     {% for ticket in tickets %}
         <section class="ticket">
             <div class="ticket__username">Vous avez demandé une critique</div>
-            
             <div>{{ ticket.time_created }}</div>
             <h3 class="ticket__title">{{ ticket.title }}</h3>
             <p class="ticket__description">{{ ticket.description }}</p>
@@ -18,35 +17,31 @@
         </section>
     {% endfor %}
 
-
-        {% comment %} Bloc review {% endcomment %}
-        {% for review in reviews %}
-            <section class="review">
-                    <div class="review__usernameAndDate"></div>
-                    <div>Vous avez publié une critique</div>
-                    <div>{{ review.time_created }}</div>
-                    <h3>{{ review.headline }}</h3>
-                    <div>Note: {{review.rating}}<span> ☆</span>
-                    </div>
-                    <div>{{ review.body }}</div></p>
-                    <strong><a class="btn" href="{% url 'review-update' review.pk %}">Modifier</a></strong>
-                    <strong><a class="btn" href="{% url 'review-delete' review.pk %}">Supprimer</a></strong>
-                    
-                <section class="ticket">
-                    <div class="ticket__usernameAndDate"></div>
-                    {% if review.ticket.user == current_user %}
-                        <div>Vous avez demandé une critique</div>
-                    {% else %}
-                        <div>{{review.ticket.user}} a demandé une critique</div>
-                    <div>{{review.ticket.time_created}}</div>
-                    {% endif %}
-
-                    <h3 class="ticket__title">{{ review.ticket.title }}</h3>
-                    <p class="ticket__description">{{ review.ticket.description }}</p>
-                    <img class="ticket__image" src="{{ review.ticket.image.url }}">
-                    
-                </section>
+    {% comment %} Bloc review {% endcomment %}
+    {% for review in reviews %}
+        <section class="review">
+                <div class="review__usernameAndDate"></div>
+                <div>Vous avez publié une critique</div>
+                <div>{{ review.time_created }}</div>
+                <h3>{{ review.headline }}</h3>
+                <div>Note: {{review.rating}}<span> ☆</span>
+                </div>
+                <div>{{ review.body }}</div></p>
+                <strong><a class="btn" href="{% url 'review-update' review.pk %}">Modifier</a></strong>
+                <strong><a class="btn" href="{% url 'review-delete' review.pk %}">Supprimer</a></strong>
+            <section class="ticket">
+                <div class="ticket__usernameAndDate"></div>
+                {% if review.ticket.user == current_user %}
+                    <div>Vous avez demandé une critique</div>
+                {% else %}
+                    <div>{{review.ticket.user}} a demandé une critique</div>
+                <div>{{review.ticket.time_created}}</div>
+                {% endif %}
+                <h3 class="ticket__title">{{ review.ticket.title }}</h3>
+                <p class="ticket__description">{{ review.ticket.description }}</p>
+                <img class="ticket__image" src="{{ review.ticket.image.url }}">
             </section>
-        {% endfor %}
+        </section>
+    {% endfor %}
      
 {% endblock content%}

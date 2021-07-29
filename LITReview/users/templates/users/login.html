@@ -2,21 +2,17 @@
 {% block content %}
 
 <section id="block__connection"> 
-
     <div class="block__registration">
         <h2>Inscrivez-vous maintenant</h2>
         <button onclick="location.href='{% url 'registration' %}'" id="btn__toLogin">S'inscrire</button>
-    </div>        
-    
+    </div>
     <form method="post">
         {% csrf_token %}
-            <div class="block__login">
-                <h2>Connectez vous</h2>
-                {{ form.as_p }}
-                <button type="submit" id="btn__validateRegistration">Se connecter</button>
-            </div>
+        <div class="block__login">
+            <h2>Connectez vous</h2>
+            {{ form.as_p }}
+            <button type="submit" id="btn__validateRegistration">Se connecter</button>
+        </div>
     </form>
-
-</section>
-        
+</section>     
 {% endblock content %}

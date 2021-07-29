@@ -1,11 +1,8 @@
 {% extends "index.html" %}
 {% block content %}
-
     <h2 style="text-align: center;">Modifier votre critique</h2>
-
     <form method="POST" enctype="multipart/form-data">
         {% csrf_token %}
-
         <p>Vous êtes en train de poster la critique du post :
             <section class="ticket">
                 <div class="ticket__usernameAndDate"></div>
@@ -15,7 +12,6 @@
                 <p class="ticket__description">{{ review.ticket.description }}</p>
                 <img class="ticket__image" src="{{ review.ticket.image.url }}">
             </section>
-
         <section class="ticket">
             <div class="form">
                 {{ form.as_p }}
@@ -23,5 +19,4 @@
             </div>
         </section>
     </form>
-    
 {% endblock content %}

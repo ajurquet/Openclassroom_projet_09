@@ -1,11 +1,14 @@
 from django.contrib.auth.models import User
 from django.db import models
-from django.conf import settings
+
 
 class UserFollows(models.Model):
     # Your UserFollows model definition goes here
-    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='following')
-    followed_user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='followed_by')
+    user = models.ForeignKey(User, on_delete=models.CASCADE,
+                                   related_name='following')
+
+    followed_user = models.ForeignKey(User, on_delete=models.CASCADE,
+                                            related_name='followed_by')
 
     def __str__(self):
         return f"user: {self.user.username} - followed_user: {self.followed_user.username}"

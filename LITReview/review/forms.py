@@ -1,13 +1,6 @@
 from django import forms
-from django.db.models import fields
-from django.forms import widgets
-from django.forms.models import ModelChoiceField
 from .models import Ticket, Review
-# from PIL import Image
 
-# class TicketForm(forms.Form):
-#     title = forms.CharField(max_length=128, required=True)
-#     description = forms.CharField(max_length=128, required=True, widget=forms.Textarea())
 
 class TicketForm(forms.ModelForm):
     class Meta:

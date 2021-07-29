@@ -1,4 +1,3 @@
-from subscriptions.models import UserFollows
 from django.contrib import messages
 from review.models import Review, Ticket
 from django.shortcuts import redirect, render
@@ -16,7 +15,6 @@ from .models import Ticket, Review
 @login_required
 def create_ticket(request):
     title = "Créer un ticket"
-    
     if request.method == "POST":
         try:
             Ticket.objects.create(title=request.POST['title'],
@@ -29,10 +27,8 @@ def create_ticket(request):
         else:
             messages.success(request, 'Ticket créé !')
             return redirect("flux")
-
     else:
         form = TicketForm(request.POST, request.FILES)
-
     return render(request, 'review/createticket.html', {'title' : title,
                                                         'form_ticket': form}
                                                         )
@@ -41,7 +37,6 @@ def create_ticket(request):
 @login_required
 def create_review(request):
     title = "Créer une review"
-
     if request.method == "POST":
         try:
             ticket_instance = Ticket.objects.create(title=request.POST['title'],
@@ -49,7 +44,6 @@ def create_review(request):
                                 image = request.FILES['image'],
                                 user=request.user
                                 )
-
             Review.objects.create(ticket=ticket_instance,
                             headline=request.POST['headline'],
                             rating=request.POST['rating'],
@@ -61,16 +55,14 @@ def create_review(request):
         else:
             messages.success(request, f'Review créée !')
             return redirect("flux")
-
     else:
         form_review = ReviewForm()
         form_ticket = TicketForm()
-
     return render(request, 'review/createreview.html',{
-                                                      'title' : title,
-                                                      'form_review': form_review,
-                                                      'form_ticket': form_ticket
-                                                      })
+                                                    'title' : title,
+                                                    'form_review': form_review,
+                                                    'form_ticket': form_ticket
+                                                    })
 
 
 @login_required
@@ -92,10 +84,8 @@ def create_review_existing_ticket(request, id_ticket=None):
         else:
             messages.success(request, f'Review créée !')
             return redirect("flux")
-
     else:
         form_review = ReviewForm()
-
     return render(request, 'review/createreview_existing_ticket.html',{
                                             'title' : title,
                                             'form_review': form_review,
@@ -106,7 +96,8 @@ def create_review_existing_ticket(request, id_ticket=None):
 @login_required
 def flux(request):
     current_user = request.user
-    users_follows = UserFollows.objects.all()
+
+    # Queries on reviews :
 
     # Ids of all my followers
     followers = current_user.following.all()
@@ -114,36 +105,19 @@ def flux(request):
     for follower in followers:
         followers_id.append(follower.followed_user.pk)
 
-    reviews = Review.objects.filter()
-
     # Ids of users who answered my tickets
-    user_tickets = Ticket.objects.filter(user=current_user)
-
     ids_of_ticket_answerers = []
     for ticket in Ticket.objects.filter(user=current_user):
         for review in Review.objects.all():
             if review.ticket == ticket:
                 ids_of_ticket_answerers.append(review.user.pk)
-    print(f'Ids des répondant : {ids_of_ticket_answerers}')
 
-    test_reviews = Review.objects.filter(user=request.user) | Review.objects.filter(user_id__in=followers_id) 
-    print(test_reviews)
-
-    # Queries on reviews
-    users_to_include = []
-    for review in Review.objects.all():
-        if review.user == request.user: # Si la review est l'utilisateur
-            users_to_include.append(review.user.pk)
-        if review.user == request.user.following: # Si la review est d'un des abonnés
-            review.user.append(review.user.pk)
-        if review.ticket.user == request.user: # Si le ticket est de l'utilisateur
-            users_to_include.append(review.ticket.user.pk)
-
-    reviews = Review.objects.filter(user=request.user) | Review.objects.filter(user_id__in=followers_id)| Review.objects.filter(user_id__in=ids_of_ticket_answerers)
-
+    reviews = (Review.objects.filter(user=request.user) |
+               Review.objects.filter(user_id__in=followers_id) |
+               Review.objects.filter(user_id__in=ids_of_ticket_answerers)
+               )
     # returns queryset of reviews
     reviews = reviews.annotate(content_type=Value('REVIEW', CharField()))
-
 
     #Queries on tickets
     followers = current_user.following.all()
@@ -151,7 +125,9 @@ def flux(request):
     for follower in followers:
         followers_list.append(follower.followed_user.pk)
 
-    tickets = Ticket.objects.filter(user_id__in=followers_list) | Ticket.objects.filter(user=request.user)
+    tickets = (Ticket.objects.filter(user_id__in=followers_list) |
+               Ticket.objects.filter(user=request.user)
+               )
     # returns queryset of tickets
     tickets = tickets.annotate(content_type=Value('TICKET', CharField()))
 
@@ -160,11 +136,7 @@ def flux(request):
         chain(reviews, tickets), 
         key=lambda post: post.time_created, 
         reverse=True
-    )
-
-    for post in posts:
-        print(post)
-
+        )
     return render(request, 'review/flux.html', context={'posts': posts})
  
     
@@ -175,7 +147,7 @@ def posts(request):
     tickets = Ticket.objects.filter(user=current_user)
     for ticket in tickets:
         print(ticket.image)
-    reviews = Review.objects.filter(user=current_user).filter()
+    reviews = Review.objects.filter(user=current_user)
     context = {"title": title,
                "tickets" : tickets,
                "reviews" : reviews,

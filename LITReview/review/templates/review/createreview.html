@@ -1,8 +1,6 @@
 {% extends "index.html" %}
 {% block content %}
-
     <h2 style="text-align: center;">Créer une review</h2>
-
     <form method="POST" enctype="multipart/form-data">
         {% csrf_token %}
         <div class="forms">
@@ -11,5 +9,4 @@
             <input type="submit" value="Envoyer">
         </div>
     </form>
-    
 {% endblock content%}

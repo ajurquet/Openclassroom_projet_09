@@ -3,18 +3,15 @@
         <div class="review__usernameAndDate"></div>
         <div>Vous avez publié une critique</div>
         <div>{{ post.time_created }}</div>
-
     {% else %}
         <div class="review__usernameAndDate"></div>
         <div>{{ post.user.username }} a publié une critique</div>
         <div>{{ post.time_created }}</div>
     {% endif %}
         <h3>{{ post.headline }}</h3>
-        
         <div>Note: {{post.rating}}<span> ☆</span>
         </div>
         <div>{{ post.body }}</div>
-
 
     <section class="ticket">
     {% if  post.ticket.user.id == user.id%}
@@ -26,7 +23,6 @@
         <div>{{post.ticket.user.username}} a demandé une critique</div>
         <div>{{post.ticket.time_created}}</div>
     {% endif %}
-
         <h3 class="ticket__title">{{ post.ticket.title }}</h3>
         <p class="ticket__description">{{ post.ticket.description }}</p>
         <img class="ticket__image" src="{{ post.ticket.image.url }}">

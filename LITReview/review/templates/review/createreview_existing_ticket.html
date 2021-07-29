@@ -1,8 +1,6 @@
 {% extends "index.html" %}
 {% block content %}
-
     <h2 style="text-align: center;">Créer une review</h2>
-
     <section class="create_review">
     <p>Vous postez une critique en réponse à:</p>
         <form method="POST" enctype="multipart/form-data">
@@ -24,13 +22,10 @@
                     <img class="ticket__image" src="{{ existing_ticket.image.url }}">
                 {% endif %}
             </section>
-
             <div class="forms">
                 {{ form_review.as_p }}
                 <input type="submit" value="Envoyer">
             </div>
         </form>
     </section>
-
-    
 {% endblock content%}

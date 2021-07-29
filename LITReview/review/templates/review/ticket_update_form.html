@@ -1,19 +1,15 @@
 {% extends "index.html" %}
 {% block content %}
-
     <h2 style="text-align: center;">Modifier un ticket</h2>
-
     <form method="POST" enctype="multipart/form-data">
         {% csrf_token %}
         <div class="form">
-            {% comment %} {{ form.as_p }} {% endcomment %}
             <p>Titre : {{ form.title }}</p>
             <p>Description : {{ form.description }}</p>            
             {% if ticket.image %}
                 <img class="ticket__image" src="{{ ticket.image.url }}">
             {% endif %}    
             <p>Changer l'image : {{ form.image }}</p>
-
             <div>
                 <input type="submit" value="Envoyer">
             </div>
